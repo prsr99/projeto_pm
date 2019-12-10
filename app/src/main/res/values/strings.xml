@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">projeto_final</string>
+    <string name="registar">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conf_password">Confirm Password</string>
+    <string name="pass_no_match">Passwords do not match!</string>
+    <string name="email_already_exists">Email already exists. Try another one!</string>
+    <string name="no_empty">Field can\'t be empty!</string>
+    <string name="valid_email">Please insert a valid email address!</string>
+    <string name="weak_pass">Password too weak. Your password must have at least 4 characters, 1 digit, 1 upper case letter and 1 lower case letter</string>
 </resources>
