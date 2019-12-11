@@ -74,8 +74,8 @@ public class registar extends AppCompatActivity {
     }
 
 
-    public  void  email_exists(final String email, final String password) {
-        String url = "https://prsr99.000webhostapp.com/myslim/api/user/" + email;
+    public void email_exists(final String email, final String password) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/users/usercheck/" + email;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -86,24 +86,24 @@ public class registar extends AppCompatActivity {
                             boolean status = response.getBoolean("status");
                             if (status) {
                                 Toast.makeText(registar.this, getResources().getString(R.string.email_already_exists), Toast.LENGTH_SHORT).show();
-                                exist=true;
 
                             }
                             else {
-                                exist=false;
                                 Registar(email,password);
                                 //Intent i = new Intent(registar.this, Login.class);
                                 //startActivity(i);
                                 finish();
                             }
 
-                        } catch (JSONException ex) {}
+                        } catch (JSONException ex) {
+                            Toast.makeText(registar.this, "" + ex, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(registar.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -114,11 +114,12 @@ public class registar extends AppCompatActivity {
 
 
     public void Registar(String email, String password) {
-        String url = "https://prsr99.000webhostapp.com/myslim/api/user";
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/users";
 
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put("email", email);
         jsonParams.put("password", password);
+        jsonParams.put("ifcliente", String.valueOf(1));
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
                 new JSONObject(jsonParams),
@@ -132,6 +133,7 @@ public class registar extends AppCompatActivity {
                                 Toast.makeText(registar.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException ex) {
+                            Toast.makeText(registar.this, "" + ex, Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
