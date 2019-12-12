@@ -34,17 +34,10 @@
         android:layout_below="@id/l1"
         android:layout_centerHorizontal="true">
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lembraruser" />
-
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/checkBox"
             android:layout_marginTop="0dp"
             android:text="Login"
             tools:layout_editor_absoluteX="159dp"

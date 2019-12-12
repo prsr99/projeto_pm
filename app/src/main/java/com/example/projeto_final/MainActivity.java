@@ -30,15 +30,16 @@ public class MainActivity extends AppCompatActivity {
     Context mContext = this;
     String id;
     int id_int = -1;
+    Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      final EditText et1 = (EditText)findViewById(R.id.user);
-      final EditText et2 = (EditText)findViewById(R.id.password);
+        final EditText et1 = (EditText)findViewById(R.id.user);
+        final EditText et2 = (EditText)findViewById(R.id.password);
         Button btn1 = (Button)findViewById(R.id.button1);
         Button btn2 = (Button)findViewById(R.id.button2);
-
+        session = new Session(this);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,12 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
+        if(session.loggedIn()) {
+            Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void Login(final String email, String password) {
@@ -195,11 +195,9 @@ public class MainActivity extends AppCompatActivity {
                                 id = obj.optString("id");
                                 //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
                                 id_int = Integer.parseInt(id);
-                               // Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                //intent.putExtra("ID", id_int);
-                               // managePrefs();
-                                //startActivity(intent);
-                                Toast.makeText(MainActivity.this, "Login efetuado com sucesso com o id: " + id, Toast.LENGTH_SHORT).show();
+                                //session.setLoggedIn(true, id_int);
+                                ifCliente(id_int);
+
                             }
 
                             else {
@@ -241,8 +239,155 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+public void criaCliente (int id) {
+
+    String url = "https://inactive-mosses.000webhostapp.com/myslim/api/clientes";
+
+    Map<String, String> jsonParams = new HashMap<String, String>();
+    jsonParams.put("id_user", String.valueOf(id));
+    JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
+            new JSONObject(jsonParams),
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getBoolean("status")) {
+                            Toast.makeText(MainActivity.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException ex) {
+                        Toast.makeText(MainActivity.this, "" + ex, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            HashMap<String, String> headers = new HashMap<String, String>();
+            headers.put("Content-Type", "application/json; charset-utf-8");
+            headers.put("User-agent", System.getProperty("http.agent"));
+            return headers;
+        }
+    };
+    MySingleton.getInstance(this).addToRequestQueue(postRequest);
+}
 
 
+public void existeCliente (final int id) {
+    String url = "https://inactive-mosses.000webhostapp.com/myslim/api/clientes/" + id;
+
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        boolean status = response.getBoolean("status");
+                        if(status) {
+
+                            session.setLoggedIn(true, id_int);
+
+
+
+
+                            Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+                            startActivity(i);
+                            finish();
+
+                        }
+
+                        else {
+                              /* AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                               builder.setCancelable(true);
+                               builder.setMessage("User não existe");
+                               builder.setPositiveButton("OK",
+                                       new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog, int which) {
+                                           }
+                                       });
+
+
+                               AlertDialog dialog = builder.create();
+                               dialog.show();*/
+
+                            criaCliente(id);
+                            session.setLoggedIn(true, id_int);
+
+
+
+
+                            Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+                            startActivity(i);
+                            finish();
+
+                        }
+                    }
+                    catch (JSONException ex) {
+                        Log.d("login", "" + ex);
+                    }
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+    MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+
+
+
+}
+
+
+public void ifCliente(final int id) {
+    String url = "https://inactive-mosses.000webhostapp.com/myslim/api/user/ifcliente/" + id;
+
+    JsonObjectRequest jsObjRequest = new JsonObjectRequest
+            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        boolean status = response.getBoolean("status");
+                        if(status) {
+                            existeCliente(id);
+
+                        }
+
+                        else if(status == false){
+                            //ACTIVITY DO MECANICO
+                        }
+
+                        else {
+                            Toast.makeText(MainActivity.this, "user nao existe", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (JSONException ex) {
+                        Log.d("login", "" + ex);
+                    }
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+    MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+
+}
 
 
 

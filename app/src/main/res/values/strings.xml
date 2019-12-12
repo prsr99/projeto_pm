@@ -25,7 +25,7 @@
     <string name="idade">Idade*</string>
     <string name="alertapreenche">Preencha todos os campos !</string>
     <string name="user">Utilizador</string>
-   <!-- <string name="registar">Registar</string> -->
+    <!-- <string name="registar">Registar</string> -->
     <string name="preencheloginuser">Preencha o campo username</string>
     <string name="preencheloginpass">Preencha o campo password</string>
     <string name="confirmarpassword">Confirmar password</string>
