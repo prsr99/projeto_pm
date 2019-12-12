@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">projeto_final</string>
+    <string name="registar">Registar</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conf_password">Confirmar Password</string>
+    <string name="pass_no_match">Passwords não coincidem!</string>
+    <string name="email_already_exists">Email já existe. Tenta outro!</string>
+    <string name="no_empty">Campo não pode estar vazio!</string>
+    <string name="valid_email">Insira um email válido!</string>
+    <string name="weak_pass">Password fraca. A tua password tem de ter no minimo 4 carateres, 1 digito, 1 letra maiuscula e 1 letra miniscula</string>
+</resources>
