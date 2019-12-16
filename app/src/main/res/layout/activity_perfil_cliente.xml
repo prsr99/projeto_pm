@@ -12,14 +12,127 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true">
 
-        <Button
-            android:id="@+id/button1"
+        <EditText
+            android:id="@+id/nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="@string/nome">
+        </EditText>
+
+        <EditText
+            android:id="@+id/apelido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nome"
+            android:textSize="18sp"
+            android:hint="Apelido*">
+        </EditText>
+
+        <EditText
+            android:id="@+id/telemovel"
+            android:layout_below="@+id/apelido"
+            android:hint="Telemóvel*"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/telemovel"
+            android:textSize="20sp"
+            android:layout_marginTop="35sp"
+            android:text="Veículo">
+        </TextView>
+
+        <View
+            android:id="@+id/linha"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="60sp"
+            android:layout_below="@id/telemovel"
+            android:background="#c0c0c0"/>
+
+        <LinearLayout
+            android:id="@+id/spinners"
+            android:layout_below="@+id/linha"
+            android:layout_width="match_parent"
+            android:layout_marginRight="50sp"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spinner_marca"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35sp">
+            </Spinner>
+
+            <Spinner
+                android:id="@+id/spinner_modelo"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/spinner_marca"
+                android:layout_marginTop="35sp">
+            </Spinner>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_marca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="Logout"
-            tools:layout_editor_absoluteX="159dp"
-            tools:layout_editor_absoluteY="184dp"
+            android:text="Marca:"
+            android:textSize="18sp"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="230sp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modelo:"
+            android:textSize="18sp"
+            android:layout_marginLeft="200sp"
+            android:layout_marginTop="230sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/ano"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="60sp"
+            android:layout_marginLeft="35sp"
+            android:layout_below="@+id/tv_marca"
+            android:textSize="18sp"
+            android:hint="Ano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <EditText
+            android:id="@+id/matricula"
+            android:layout_below="@+id/ano"
+            android:layout_marginRight="60sp"
+            android:layout_marginLeft="35sp"
+            android:hint="Matrícula"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_below="@id/matricula"
+            android:layout_marginTop="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="18sp"
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>

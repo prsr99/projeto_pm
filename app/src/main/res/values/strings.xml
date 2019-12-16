@@ -41,4 +41,6 @@
     <string name="ordenanome">Ordenar por nome</string>
     <string name="ordernaridade">Ordenar por idade</string>
     <string name="confirmapassworderro">A password não coincide</string>
+    <string name="perfil">Profile</string>
+    <string name="telemovel">Phone Number*</string>
 </resources>
