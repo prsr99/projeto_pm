@@ -37,8 +37,6 @@ public class PerfilCliente extends AppCompatActivity {
     EditText telemovel;
     EditText ano;
     EditText matricula;
-    Button btn;
-    String name = "teste";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
