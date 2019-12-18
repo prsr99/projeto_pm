@@ -11,23 +11,29 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PerfilCliente extends AppCompatActivity {
+public class PerfilCliente extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Session session;
     String id_cliente;
     String id_user;
@@ -37,6 +43,9 @@ public class PerfilCliente extends AppCompatActivity {
     EditText telemovel;
     EditText ano;
     EditText matricula;
+    EditText apelido;
+    String[] marcas;
+    String marca_nome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +53,17 @@ public class PerfilCliente extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_cliente);
         session = new Session(this);
 
+      //  nome = (EditText) findViewById(R.id.nome);
+//        ano = (EditText) findViewById(R.id.ano);
+    //    matricula = (EditText) findViewById(R.id.matricula);
+
         nome = (EditText) findViewById(R.id.nome);
         telemovel = (EditText) findViewById(R.id.telemovel);
         ano = (EditText) findViewById(R.id.ano);
         matricula = (EditText) findViewById(R.id.matricula);
+        apelido = (EditText) findViewById(R.id.apelido);
+        fillSpinner_marca();
+
         Button btn1 = (Button)findViewById(R.id.button1);
 
         if(!session.loggedIn()) {
@@ -60,6 +76,7 @@ public class PerfilCliente extends AppCompatActivity {
         final int id_cliente = result.getInt("ID_CLIENTE", -1);
         final int id_user = result.getInt("ID_USER", -1);
         getIDCliente(id_user);
+        fillPerfil(id_user);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +110,7 @@ public class PerfilCliente extends AppCompatActivity {
                                 JSONObject obj = response.getJSONObject(("DATA"));
                                 id_cliente = obj.optString("id");
                                 id_int_cliente = Integer.parseInt(id_cliente);
-                                if_perfil_completo(id_int_cliente);
+                                //if_perfil_completo(id_int_cliente);
 
                             }
                             else {
@@ -155,6 +172,72 @@ public class PerfilCliente extends AppCompatActivity {
 
     }
 
+    private void fillPerfil(int id) {
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getclientes/" + id;
+        //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray arr = response.getJSONArray("DATA");
+                    // arrayContacto.clear();
+                    boolean status = response.getBoolean("status");
+                    // Toast.makeText(MainActivity.this, "" + status, Toast.LENGTH_SHORT).show();
+                    if(status == true) {
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject obj = arr.getJSONObject(i);
+                            //Toast.makeText(MainActivity.this, obj.getString("nome"), Toast.LENGTH_SHORT).show()
+                           /* arrayContacto.add(new Contacto(obj.getInt("id"), obj.getString("nome"), obj.getString("apelido"), obj.getInt("numero"), obj.getString("email"), obj.getString("morada"), obj.getInt("idade"), iduser));
+                            CustomArrayAdapter itemsAdapter =
+                                    new CustomArrayAdapter(MainActivity.this, arrayContacto);
+                            ((ListView) findViewById(R.id.lista)).setAdapter(itemsAdapter);*/
+
+
+                            nome.setText(obj.getString("nome"));
+                            apelido.setText(obj.getString("apelido"));
+                            telemovel.setText(String.valueOf(obj.getInt("telemovel")));
+                            ano.setText(String.valueOf(obj.getInt("ano")));
+                            matricula.setText(obj.getString("matricula"));
+
+
+
+
+                        }
+                    }
+                    else  {
+                    }
+                } catch (JSONException ex) {
+                    Log.d("fillLista", "" + ex);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public  void onErrorResponse(VolleyError error) {
+                // Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+
+
+
+       /* ArrayList<Contacto> arrayContacto = new ArrayList<>();
+        arrayContacto.add(new Contacto("Miguel", "Oliveira", 966400474, "teste@teste.pt", "Rua", 20));
+        CustomArrayAdapter itemsAdapter =
+                new CustomArrayAdapter(this, arrayContacto);
+        ((ListView) findViewById(R.id.lista)).setAdapter(itemsAdapter);*/
+    }
+
+
+
+
+
+
+
+
+
+
     public void preenche_perfil(int id) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/editar/" + id;
         /*
@@ -199,6 +282,220 @@ public class PerfilCliente extends AppCompatActivity {
 
          */
     }
+
+    public void fillSpinner_marca(){
+
+
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmarcas";
+
+
+              JsonArrayRequest req = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                marcas = new String[response.length()];
+
+
+                try {
+
+                    for (int i = 0; i < response.length(); i++) {
+
+                        JSONObject obj = response.getJSONObject(i);
+                        marcas[i] = obj.getString("marca");
+
+                    }
+
+                }
+                catch (JSONException ex) {
+
+                }
+
+                Spinner spinner_marca = (Spinner) findViewById(R.id.spinner_marca);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_marca.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_marca.setAdapter(marca);
+
+                spinner_marca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(parent.getItemAtPosition(position).equals("Audi")) {
+                            getModelo_audi();
+                        }
+                        if(parent.getItemAtPosition(position).equals("BMW")) {
+                            getModelo_bmw();
+                        }
+                        if(parent.getItemAtPosition(position).equals("Honda")) {
+                            getModelo_honda();
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(req);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        marca_nome = marcas[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
+    public void getModelo_audi() {
+
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_audi";
+
+        JsonArrayRequest req = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                marcas = new String[response.length()];
+
+
+                try {
+
+                    for (int i = 0; i < response.length(); i++) {
+
+                        JSONObject obj = response.getJSONObject(i);
+                        marcas[i] = obj.getString("modelo");
+
+                    }
+
+                }
+                catch (JSONException ex) {
+
+                }
+
+                Spinner spinner_modelo = (Spinner) findViewById(R.id.spinner_modelo);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_modelo.setAdapter(marca);
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(req);
+
+    }
+
+    public void getModelo_bmw() {
+
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_bmw";
+
+        JsonArrayRequest req = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                marcas = new String[response.length()];
+
+
+                try {
+
+                    for (int i = 0; i < response.length(); i++) {
+
+                        JSONObject obj = response.getJSONObject(i);
+                        marcas[i] = obj.getString("modelo");
+
+                    }
+
+                }
+                catch (JSONException ex) {
+
+                }
+
+                Spinner spinner_modelo = (Spinner) findViewById(R.id.spinner_modelo);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_modelo.setAdapter(marca);
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(req);
+
+    }
+
+    public void getModelo_honda() {
+
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_honda";
+
+        JsonArrayRequest req = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                marcas = new String[response.length()];
+
+
+                try {
+
+                    for (int i = 0; i < response.length(); i++) {
+
+                        JSONObject obj = response.getJSONObject(i);
+                        marcas[i] = obj.getString("modelo");
+
+                    }
+
+                }
+                catch (JSONException ex) {
+
+                }
+
+                Spinner spinner_modelo = (Spinner) findViewById(R.id.spinner_modelo);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_modelo.setAdapter(marca);
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(req);
+
+    }
+
+
+
+
+
+
+
+
 
 
 

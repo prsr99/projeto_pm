@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/nome"
@@ -55,49 +54,51 @@
             android:layout_below="@id/telemovel"
             android:background="#c0c0c0"/>
 
-        <LinearLayout
-            android:id="@+id/spinners"
-            android:layout_below="@+id/linha"
-            android:layout_width="match_parent"
-            android:layout_marginRight="50sp"
-            android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/spinner_marca"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35sp">
-            </Spinner>
+        <Spinner
+            android:id="@+id/spinner_marca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linha"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="15sp"
+            android:layout_marginRight="75dp"
+            android:layout_toRightOf="@+id/tv_marca"
+            android:dropDownWidth="wrap_content">
+        </Spinner>
 
-            <Spinner
-                android:id="@+id/spinner_modelo"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/spinner_marca"
-                android:layout_marginTop="35sp">
-            </Spinner>
+        <Spinner
+            android:id="@+id/spinner_modelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="75dp"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/tv_modelo"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/spinner_marca">
+        </Spinner>
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_marca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Marca:"
-            android:textSize="18sp"
-            android:layout_marginLeft="40sp"
-            android:layout_marginTop="230sp">
+            android:layout_marginTop="15sp"
+            android:layout_below="@+id/linha"
+            android:textSize="18sp">
         </TextView>
 
         <TextView
+            android:id="@+id/tv_modelo"
             android:layout_width="wrap_content"
+            android:layout_marginTop="15sp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_marca"
             android:text="Modelo:"
-            android:textSize="18sp"
-            android:layout_marginLeft="200sp"
-            android:layout_marginTop="230sp">
+            android:textSize="18sp">
         </TextView>
 
         <EditText
@@ -105,9 +106,9 @@
             android:layout_marginTop="20sp"
             android:layout_marginRight="60sp"
             android:layout_marginLeft="35sp"
-            android:layout_below="@+id/tv_marca"
+            android:layout_below="@+id/tv_modelo"
             android:textSize="18sp"
-            android:hint="Ano"
+            android:hint="Ano*"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </EditText>
@@ -117,7 +118,7 @@
             android:layout_below="@+id/ano"
             android:layout_marginRight="60sp"
             android:layout_marginLeft="35sp"
-            android:hint="Matrícula"
+            android:hint="Matrícula*"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
