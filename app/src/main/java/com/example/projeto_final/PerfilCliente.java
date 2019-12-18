@@ -55,7 +55,7 @@ public class PerfilCliente extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
+        //
         SharedPreferences result = getSharedPreferences("myApp", Context.MODE_PRIVATE);
         final int id_cliente = result.getInt("ID_CLIENTE", -1);
         final int id_user = result.getInt("ID_USER", -1);
