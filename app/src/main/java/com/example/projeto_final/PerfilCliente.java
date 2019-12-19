@@ -78,7 +78,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         final int id_user = result.getInt("ID_USER", -1);
         getIDCliente(id_user);
         fillPerfil(id_user);
-        fillSpinner_marca(id_user);
+       // fillSpinner_marca(id_user);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +97,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    public void getIDCliente (int id_user) {
+    public void getIDCliente (final int id_user) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/" + id_user;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -111,7 +111,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                                 JSONObject obj = response.getJSONObject(("DATA"));
                                 id_cliente = obj.optString("id");
                                 id_int_cliente = Integer.parseInt(id_cliente);
-                                //if_perfil_completo(id_int_cliente);
+                                if_perfil_completo(id_user);
 
                             }
                             else {
@@ -134,7 +134,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
     }
 
-    public void if_perfil_completo(int id) {
+    public void if_perfil_completo(final int id) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/perfil_completo/" + id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -145,15 +145,17 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                         try {
                             boolean status = response.getBoolean("status");
                             if (status) {
+                                /*
                                 Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
                                 startActivity(i);
-                                finish();
+                                finish();*/
+                                fillSpinner_marca(id, 0);
 
                             }
                             else {
                                 Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
-
+                                fillSpinner_marca(id, 1);
                             }
 
                         } catch (JSONException ex) {
@@ -195,12 +197,22 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                                     new CustomArrayAdapter(MainActivity.this, arrayContacto);
                             ((ListView) findViewById(R.id.lista)).setAdapter(itemsAdapter);*/
 
+                           String getnome = obj.getString("nome");
+                           String getapelido = obj.getString("apelido");
+                           String gettelemovel = String.valueOf(obj.getInt("telemovel"));
+                           String getano = String.valueOf(obj.getInt("ano"));
+                           String getmatricula = obj.getString("matricula");
 
-                            nome.setText(obj.getString("nome"));
-                            apelido.setText(obj.getString("apelido"));
-                            telemovel.setText(String.valueOf(obj.getInt("telemovel")));
-                            ano.setText(String.valueOf(obj.getInt("ano")));
-                            matricula.setText(obj.getString("matricula"));
+
+
+
+                            Toast.makeText(PerfilCliente.this, "" + getnome, Toast.LENGTH_SHORT).show();
+
+                            nome.setText(getnome);
+                            apelido.setText(getapelido);
+                            telemovel.setText(gettelemovel);
+                            ano.setText(getano);
+                            matricula.setText(getmatricula);
 
 
 
@@ -342,7 +354,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
     }
 */
-    private void fillSpinner_marca(final int user_id) {
+    private void fillSpinner_marca(final int user_id, final int ifnovo) {
 
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmarcas/" + user_id;
         //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -355,7 +367,12 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                     marcas = new String[arr.length()];
                     // arrayContacto.clear();
                     boolean status = response.getBoolean("status");
+
+
+                    if(ifnovo == 0)
                     marca_id = response.getInt("MARCA");
+
+
                     // Toast.makeText(MainActivity.this, "" + status, Toast.LENGTH_SHORT).show();
                     if(status == true) {
                         for (int i = 0; i < arr.length(); i++) {
@@ -380,19 +397,33 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 spinner_marca.setOnItemSelectedListener(PerfilCliente.this);
                 marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_marca.setAdapter(marca);
-                spinner_marca.setSelection(marca_id - 1);
+                if(ifnovo == 0) {
+                    spinner_marca.setSelection(marca_id - 1);
+                }
                 spinner_marca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                         if(parent.getItemAtPosition(position).equals("Audi")) {
-                            getModelo_audi(user_id);
+                            if(ifnovo == 1)
+                            getModelo_audi(user_id,1);
+
+                            if(ifnovo == 0)
+                                getModelo_audi(user_id, 0);
                         }
                         if(parent.getItemAtPosition(position).equals("BMW")) {
-                            getModelo_bmw(user_id);
+                            if(ifnovo == 1)
+                                getModelo_bmw(user_id,1);
+
+                            if(ifnovo == 0)
+                                getModelo_bmw(user_id, 0);
                         }
                         if(parent.getItemAtPosition(position).equals("Honda")) {
-                            getModelo_honda(user_id);
+                            if(ifnovo == 1)
+                                getModelo_honda(user_id,1);
+
+                            if(ifnovo == 0)
+                                getModelo_honda(user_id, 0);
                         }
                     }
 
@@ -475,7 +506,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     }
 */
 
-    private void getModelo_audi(int user_id) {
+    private void getModelo_audi(int user_id, final int ifnovo) {
 
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_audi/" + user_id;
         //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -486,7 +517,10 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 try {
                     JSONArray arr = response.getJSONArray("DATA");
                     marcas = new String[arr.length()];
+                    if(ifnovo == 0)
                     modelo_id = response.getInt("MODELO");
+
+
                     // arrayContacto.clear();
                     boolean status = response.getBoolean("status");
                     //marca_id = response.getInt("MARCA");
@@ -514,7 +548,9 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
                 marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_modelo.setAdapter(marca);
-                spinner_modelo.setSelection(modelo_id - 1);
+                if(ifnovo == 0) {
+                    spinner_modelo.setSelection(modelo_id - 1);
+                }
             }
         },new Response.ErrorListener() {
             @Override
@@ -573,7 +609,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
  */
 
-    private void getModelo_bmw(int user_id) {
+    private void getModelo_bmw(int user_id, final int ifnovo) {
 
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_bmw/" + user_id;
         //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -584,7 +620,13 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 try {
                     JSONArray arr = response.getJSONArray("DATA");
                     marcas = new String[arr.length()];
+
+
+                    if(ifnovo == 0)
                     modelo_id = response.getInt("MODELO");
+
+
+
                     // arrayContacto.clear();
                     boolean status = response.getBoolean("status");
                     //marca_id = response.getInt("MARCA");
@@ -612,7 +654,9 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
                 marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_modelo.setAdapter(marca);
-                spinner_modelo.setSelection(modelo_id - 6);
+                if(ifnovo == 0) {
+                    spinner_modelo.setSelection(modelo_id - 6);
+                }
             }
         },new Response.ErrorListener() {
             @Override
@@ -670,7 +714,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
  */
 
-    private void getModelo_honda(int user_id) {
+    private void getModelo_honda(int user_id, final int ifnovo) {
 
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_honda/" + user_id;
         //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -681,7 +725,10 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 try {
                     JSONArray arr = response.getJSONArray("DATA");
                     marcas = new String[arr.length()];
+                    if(ifnovo == 0)
                     modelo_id = response.getInt("MODELO");
+
+
                     // arrayContacto.clear();
                     boolean status = response.getBoolean("status");
                     //marca_id = response.getInt("MARCA");
@@ -709,7 +756,9 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
                 marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_modelo.setAdapter(marca);
-                spinner_modelo.setSelection(modelo_id - 10);
+                if(ifnovo == 0) {
+                    spinner_modelo.setSelection(modelo_id - 10);
+                }
             }
         },new Response.ErrorListener() {
             @Override
