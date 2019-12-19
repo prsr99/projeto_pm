@@ -231,14 +231,6 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-
-
-
-
-
-
-
-
     public void preenche_perfil(int id) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/editar/" + id;
         /*
@@ -397,10 +389,10 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                             getModelo_audi(user_id);
                         }
                         if(parent.getItemAtPosition(position).equals("BMW")) {
-                            getModelo_bmw();
+                            getModelo_bmw(user_id);
                         }
                         if(parent.getItemAtPosition(position).equals("Honda")) {
-                            getModelo_honda();
+                            getModelo_honda(user_id);
                         }
                     }
 
@@ -425,15 +417,6 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -544,9 +527,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-
-
-
+/*
     public void getModelo_bmw() {
 
 
@@ -590,6 +571,60 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+ */
+
+    private void getModelo_bmw(int user_id) {
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_bmw/" + user_id;
+        //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray arr = response.getJSONArray("DATA");
+                    marcas = new String[arr.length()];
+                    modelo_id = response.getInt("MODELO");
+                    // arrayContacto.clear();
+                    boolean status = response.getBoolean("status");
+                    //marca_id = response.getInt("MARCA");
+                    // Toast.makeText(MainActivity.this, "" + status, Toast.LENGTH_SHORT).show();
+                    if(status == true) {
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject obj = arr.getJSONObject(i);
+
+                            marcas[i] = obj.getString("modelo");
+
+                        }
+                    }
+
+
+                    else  {
+
+
+                    }
+                } catch (JSONException ex) {
+
+                }
+
+                Spinner spinner_modelo = (Spinner) findViewById(R.id.spinner_modelo);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_modelo.setAdapter(marca);
+                spinner_modelo.setSelection(modelo_id - 6);
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    }
+
+/*
     public void getModelo_honda() {
 
 
@@ -633,15 +668,58 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+ */
+
+    private void getModelo_honda(int user_id) {
+
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/getmodelo_honda/" + user_id;
+        //Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray arr = response.getJSONArray("DATA");
+                    marcas = new String[arr.length()];
+                    modelo_id = response.getInt("MODELO");
+                    // arrayContacto.clear();
+                    boolean status = response.getBoolean("status");
+                    //marca_id = response.getInt("MARCA");
+                    // Toast.makeText(MainActivity.this, "" + status, Toast.LENGTH_SHORT).show();
+                    if(status == true) {
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject obj = arr.getJSONObject(i);
+
+                            marcas[i] = obj.getString("modelo");
+
+                        }
+                    }
 
 
+                    else  {
 
 
+                    }
+                } catch (JSONException ex) {
 
+                }
 
+                Spinner spinner_modelo = (Spinner) findViewById(R.id.spinner_modelo);
+                ArrayAdapter<String> marca = new ArrayAdapter<String>(PerfilCliente.this,android.R.layout.simple_spinner_item, marcas);
+                spinner_modelo.setOnItemSelectedListener(PerfilCliente.this);
+                marca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_modelo.setAdapter(marca);
+                spinner_modelo.setSelection(modelo_id - 10);
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
 
-
-
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
