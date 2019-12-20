@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(session.loggedIn()) {
-            Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+            Intent i = new Intent(MainActivity.this, MenuUtilizador.class);
             startActivity(i);
             finish();
         }
@@ -177,6 +177,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void if_perfil_completo(final int id) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/perfil_completo/" + id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean status = response.getBoolean("status");
+                            if (status) {
+
+                                //Toast.makeText(MainActivity.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(MainActivity.this, MenuUtilizador.class);
+                                startActivity(i);
+                                finish();
+
+                            }
+                            else {
+                                 //Toast.makeText(MainActivity.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException ex) {
+                            Toast.makeText(MainActivity.this, "" + ex, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
+    }
 
     public void getIDUser (String email) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/users/" + email;
@@ -295,9 +334,10 @@ public void existeCliente (final int id) {
                             int idcliente = obj.getInt("id");
                             session.setLoggedIn(true, id_int_user);
 
-                            Intent i = new Intent(MainActivity.this, PerfilCliente.class);
-                            startActivity(i);
-                            finish();
+                           // Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+                           // startActivity(i);
+                            //finish();
+                            if_perfil_completo(id);
 
                         }
 

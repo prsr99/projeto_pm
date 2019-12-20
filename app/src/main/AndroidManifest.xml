@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MenuUtilizador"></activity>
+        <activity android:name=".MenuUtilizador" android:label="Menu"></activity>
         <activity
             android:name=".PerfilCliente"
-            android:label="@string/perfil" />
+            android:label="Perfil" />
         <activity
             android:name=".registar"
             android:label="@string/registar" />
