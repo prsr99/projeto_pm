@@ -20,6 +20,11 @@ public class Session {
         editor.commit();
     }
 
+    public void setClienteID(int id_cliente) {
+        editor.putInt("ID_CLIENTE", id_cliente);
+        editor.commit();
+    }
+
     public boolean loggedIn() {
         return prefs.getBoolean("loggedInMode",false);
     }

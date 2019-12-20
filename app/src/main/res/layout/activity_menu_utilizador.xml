@@ -39,10 +39,18 @@
     </Button>
 
     <Button
-        android:id="@+id/pedido_efetuados"
+        android:id="@+id/pedido_deccorrer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pedido_assistencia"
+        android:text="Pedidos a decorrer">
+    </Button>
+
+    <Button
+        android:id="@+id/pedido_efetuados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pedido_deccorrer"
         android:text="Pedidos Efetuados">
     </Button>
 

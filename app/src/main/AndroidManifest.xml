@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MenuUtilizador" android:label="Menu"></activity>
+        <activity android:name=".PedidoAssistencia" android:label="Pedido de assistência"></activity>
+        <activity
+            android:name=".MenuUtilizador"
+            android:label="Menu" />
         <activity
             android:name=".PerfilCliente"
             android:label="Perfil" />

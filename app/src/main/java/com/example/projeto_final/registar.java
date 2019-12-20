@@ -119,7 +119,6 @@ public class registar extends AppCompatActivity {
         Map<String, String> jsonParams = new HashMap<String, String>();
         jsonParams.put("email", email);
         jsonParams.put("password", password);
-        jsonParams.put("ifcliente", String.valueOf(1));
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
                 new JSONObject(jsonParams),

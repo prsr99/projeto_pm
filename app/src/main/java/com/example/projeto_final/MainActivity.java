@@ -333,7 +333,7 @@ public void existeCliente (final int id) {
                             JSONObject obj = response.getJSONObject("DATA");
                             int idcliente = obj.getInt("id");
                             session.setLoggedIn(true, id_int_user);
-
+                            session.setClienteID(idcliente);
                            // Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                            // startActivity(i);
                             //finish();
