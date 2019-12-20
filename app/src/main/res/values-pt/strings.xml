@@ -10,4 +10,6 @@
     <string name="no_empty">Campo não pode estar vazio!</string>
     <string name="valid_email">Insira um email válido!</string>
     <string name="weak_pass">Password fraca. A tua password tem de ter no minimo 4 carateres, 1 digito, 1 letra maiuscula e 1 letra miniscula</string>
+    <string name="perfil">Perfil</string>
+    <string name="telemovel">Telemóvel*</string>
 </resources>

@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     Context mContext = this;
     String id;
-    int id_int = -1;
+    int id_int_user = -1;
+    int id_int_cliente = -1;
     Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,9 +195,9 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject obj = response.getJSONObject(("DATA"));
                                 id = obj.optString("id");
                                 //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
-                                id_int = Integer.parseInt(id);
+                                id_int_user = Integer.parseInt(id);
                                 //session.setLoggedIn(true, id_int);
-                                ifCliente(id_int);
+                                ifCliente(id_int_user);
 
                             }
 
@@ -280,7 +281,7 @@ public void criaCliente (int id) {
 
 
 public void existeCliente (final int id) {
-    String url = "https://inactive-mosses.000webhostapp.com/myslim/api/clientes/" + id;
+    String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/" + id;
 
     JsonObjectRequest jsObjRequest = new JsonObjectRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -290,11 +291,9 @@ public void existeCliente (final int id) {
                     try {
                         boolean status = response.getBoolean("status");
                         if(status) {
-
-                            session.setLoggedIn(true, id_int);
-
-
-
+                            JSONObject obj = response.getJSONObject("DATA");
+                            int idcliente = obj.getInt("id");
+                            session.setLoggedIn(true, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);
@@ -303,25 +302,9 @@ public void existeCliente (final int id) {
                         }
 
                         else {
-                              /* AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                               builder.setCancelable(true);
-                               builder.setMessage("User não existe");
-                               builder.setPositiveButton("OK",
-                                       new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(DialogInterface dialog, int which) {
-                                           }
-                                       });
-
-
-                               AlertDialog dialog = builder.create();
-                               dialog.show();*/
 
                             criaCliente(id);
-                            session.setLoggedIn(true, id_int);
-
-
-
+                            session.setLoggedIn(true, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);
@@ -343,8 +326,6 @@ public void existeCliente (final int id) {
             });
     MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
-
-
 
 }
 
