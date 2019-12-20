@@ -14,10 +14,9 @@ public class Session {
         editor = prefs.edit();      // abrir sharedPreferences em modo de edição
     }
 
-    public void setLoggedIn( boolean loggedIn, int id_user, int id_cliente) {
+    public void setLoggedIn( boolean loggedIn, int id_user) {
         editor.putBoolean("loggedInMode",loggedIn);
         editor.putInt("ID_USER", id_user);
-        editor.putInt("ID_CLIENTE", id_cliente);
         editor.commit();
     }
 

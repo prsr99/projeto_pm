@@ -291,8 +291,9 @@ public void existeCliente (final int id) {
                     try {
                         boolean status = response.getBoolean("status");
                         if(status) {
-
-                            session.setLoggedIn(true, id_int_user,id_int_user);
+                            JSONObject obj = response.getJSONObject("DATA");
+                            int idcliente = obj.getInt("id");
+                            session.setLoggedIn(true, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);
@@ -303,7 +304,7 @@ public void existeCliente (final int id) {
                         else {
 
                             criaCliente(id);
-                            session.setLoggedIn(true, id_int_user,id_int_cliente);
+                            session.setLoggedIn(true, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);

@@ -49,6 +49,9 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     String marca_nome;
     int marca_id;
     int modelo_id;
+    int idmarca;
+    int idmodelo;
+    int idveiculo = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,21 +77,29 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         }
 
         SharedPreferences result = getSharedPreferences("myApp", Context.MODE_PRIVATE);
-        final int id_cliente = result.getInt("ID_CLIENTE", -1);
         final int id_user = result.getInt("ID_USER", -1);
         getIDCliente(id_user);
         fillPerfil(id_user);
+       // Toast.makeText(PerfilCliente.this, "" + id_user, Toast.LENGTH_SHORT).show();
        // fillSpinner_marca(id_user);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if (!nome.getText().toString().isEmpty() && !telemovel.getText().toString().isEmpty() && !ano.getText().toString().isEmpty() && !matricula.getText().toString().isEmpty()) {
-                preenche_perfil(id_cliente);
-                Toast.makeText(PerfilCliente.this, "" + id_cliente, Toast.LENGTH_SHORT).show();
+                if (!nome.getText().toString().isEmpty() && !apelido.getText().toString().isEmpty() && !telemovel.getText().toString().isEmpty() && !ano.getText().toString().isEmpty() && !matricula.getText().toString().isEmpty()) {
+                //cria_veiculo();
+                checkMatricula(matricula.getText().toString());
+                //edita_cliente(id_int_cliente);
+               // Toast.makeText(PerfilCliente.this, "" + id_int_cliente, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PerfilCliente.this, "" + idmarca, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PerfilCliente.this, "" + idveiculo, Toast.LENGTH_SHORT).show();
+               /*
                 Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
                 startActivity(i);
                 finish();
-                //}
+                */
+                } else {
+                    Toast.makeText(PerfilCliente.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -134,6 +145,46 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
     }
 
+    public void checkMatricula (String matricula) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/veiculo/matriculacheck/" + matricula;
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean status = response.getBoolean("status");
+                            if(status) {
+                                JSONObject obj = response.getJSONObject(("DATA"));
+                                idveiculo =  Integer.parseInt(obj.getString("id"));
+                                //Toast.makeText(PerfilCliente.this, "STATUS: " + status, Toast.LENGTH_SHORT).show();
+                                edita_veiculo(idveiculo);
+                               // edita_cliente(id_int_cliente);
+                            }
+                            else {
+                                //Toast.makeText(PerfilCliente.this, "STATUS: " + status, Toast.LENGTH_SHORT).show();
+                                cria_veiculo();
+                            }
+                        }
+                        catch (JSONException ex) {
+                            Log.d("MATRICULA", "" + ex);
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(PerfilCliente.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+        //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+    }
+
+
+
     public void if_perfil_completo(final int id) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/perfil_completo/" + id;
 
@@ -154,7 +205,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
 
                             }
                             else {
-                                Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
                                 fillSpinner_marca(id, 1);
                             }
 
@@ -200,13 +251,9 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                            String getnome = obj.getString("nome");
                            String getapelido = obj.getString("apelido");
                            String gettelemovel = String.valueOf(obj.getInt("telemovel"));
-                           String getano = String.valueOf(obj.getInt("ano"));
+                           String getano = obj.getString("ano");
                            String getmatricula = obj.getString("matricula");
 
-
-
-
-                            Toast.makeText(PerfilCliente.this, "" + getnome, Toast.LENGTH_SHORT).show();
 
                             nome.setText(getnome);
                             apelido.setText(getapelido);
@@ -214,7 +261,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                             ano.setText(getano);
                             matricula.setText(getmatricula);
 
-
+                            Log.d("valores", "nome: " + getnome + " apelido: " + getapelido + " telemovel: " + gettelemovel);
 
 
                         }
@@ -222,7 +269,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                     else  {
                     }
                 } catch (JSONException ex) {
-                    Log.d("fillLista", "" + ex);
+                    Log.d("fillPerfil", "" + ex);
                 }
             }
         }, new Response.ErrorListener() {
@@ -243,17 +290,17 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-    public void preenche_perfil(int id) {
+    public void edita_cliente(int id) {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/editar/" + id;
-        /*
-        Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("nome", data.getStringExtra(Utils.PARAM_NOME));
-        jsonParams.put("apelido", data.getStringExtra(Utils.PARAM_APELIDO));
-        jsonParams.put("numero", String.valueOf(data.getIntExtra(Utils.PARAM_NUMERO, -1)));
-        jsonParams.put("email", data.getStringExtra(Utils.PARAM_EMAIL));
-        jsonParams.put("idade", String.valueOf(data.getIntExtra(Utils.PARAM_IDADE, -1)));
-        jsonParams.put("cidade_id",data.getStringExtra(Utils.PARAM_CIDADE));
 
+        Map<String, String> jsonParams = new HashMap<String, String>();
+        String getnome = nome.getText().toString();
+        String getapelido = apelido.getText().toString();
+        String gettelemovel = telemovel.getText().toString();
+        jsonParams.put("nome", getnome);
+        jsonParams.put("apelido", getapelido);
+        jsonParams.put("telemovel", gettelemovel);
+        jsonParams.put("veiculo_id", String.valueOf(idveiculo));
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
                 new JSONObject(jsonParams),
                 new Response.Listener<JSONObject>() {
@@ -261,18 +308,19 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getBoolean("status")) {
-                                Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(PerfilCliente.this,response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(PerfilCliente.this,response.getString("MSG"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException ex) {
+                            Log.d("PRE: ","" + ex);
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PerfilCliente.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -285,8 +333,105 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         };
         MySingleton.getInstance(this).addToRequestQueue(postRequest);
 
-         */
+
     }
+
+    public void cria_veiculo() {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cria_veiculo";
+
+        Map<String, String> jsonParams = new HashMap<String, String>();
+        jsonParams.put("marca_id", String.valueOf(idmarca));
+        jsonParams.put("modelo_id", String.valueOf(idmodelo));
+        jsonParams.put("ano", ano.getText().toString());
+        jsonParams.put("matricula", matricula.getText().toString());
+        Log.d("TESTE", "" + ano.getText().toString() + " " + matricula.getText().toString());
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
+                new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getBoolean("status")) {
+                                idveiculo = response.getInt("VEICULO_ID");
+                                //Toast.makeText(PerfilCliente.this, "IDVEICULO: " + idveiculo, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(PerfilCliente.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                                edita_cliente(id_int_cliente);
+                            } else {
+                                //Toast.makeText(PerfilCliente.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException ex) {
+                            Toast.makeText(PerfilCliente.this, "" + ex, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(PerfilCliente.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset-utf-8");
+                headers.put("User-agent", System.getProperty("http.agent"));
+                return headers;
+            }
+        };
+        MySingleton.getInstance(this).addToRequestQueue(postRequest);
+    }
+
+
+
+
+    public void edita_veiculo(int id) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/edita_veiculo/" + id;
+
+        Map<String, String> jsonParams = new HashMap<String, String>();
+        jsonParams.put("marca_id", String.valueOf(idmarca));
+        jsonParams.put("modelo_id", String.valueOf(idmodelo));
+        jsonParams.put("ano", ano.getText().toString());
+        jsonParams.put("matricula", matricula.getText().toString());
+        //Log.d("TESTE", "" + ano.getText().toString() + " " + matricula.getText().toString());
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url,
+                new JSONObject(jsonParams),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getBoolean("status")) {
+                                //idveiculo = response.getInt("VEICULO_ID");
+                               // Toast.makeText(PerfilCliente.this, "IDVEICULO: " + idveiculo, Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(PerfilCliente.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                                edita_cliente(id_int_cliente);
+                            } else {
+                               // Toast.makeText(PerfilCliente.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
+                                edita_cliente(id_int_cliente);
+                            }
+                        } catch (JSONException ex) {
+                            Toast.makeText(PerfilCliente.this, "" + ex, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(PerfilCliente.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset-utf-8");
+                headers.put("User-agent", System.getProperty("http.agent"));
+                return headers;
+            }
+        };
+        MySingleton.getInstance(this).addToRequestQueue(postRequest);
+    }
+
+
+
 /*
     public void fillSpinner_marca(){
 
@@ -405,6 +550,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                         if(parent.getItemAtPosition(position).equals("Audi")) {
+                            idmarca = 1;
                             if(ifnovo == 1)
                             getModelo_audi(user_id,1);
 
@@ -412,6 +558,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                                 getModelo_audi(user_id, 0);
                         }
                         if(parent.getItemAtPosition(position).equals("BMW")) {
+                            idmarca = 2;
                             if(ifnovo == 1)
                                 getModelo_bmw(user_id,1);
 
@@ -419,6 +566,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                                 getModelo_bmw(user_id, 0);
                         }
                         if(parent.getItemAtPosition(position).equals("Honda")) {
+                            idmarca = 3;
                             if(ifnovo == 1)
                                 getModelo_honda(user_id,1);
 
@@ -551,6 +699,40 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 if(ifnovo == 0) {
                     spinner_modelo.setSelection(modelo_id - 1);
                 }
+
+                spinner_modelo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            if(position == 0)
+                                idmodelo = 1;
+
+                            if(position == 1)
+                                idmodelo = 2;
+
+                            if(position == 2)
+                                idmodelo = 3;
+
+                            if(position == 3)
+                                idmodelo = 4;
+
+                            if(position == 4)
+                                idmodelo = 5;
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
+
+
+
+
             }
         },new Response.ErrorListener() {
             @Override
@@ -657,6 +839,33 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 if(ifnovo == 0) {
                     spinner_modelo.setSelection(modelo_id - 6);
                 }
+
+                spinner_modelo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        if(position == 0)
+                            idmodelo = 6;
+
+                        if(position == 1)
+                            idmodelo = 7;
+
+                        if(position == 2)
+                            idmodelo = 8;
+
+                        if(position == 3)
+                            idmodelo = 9;
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
             }
         },new Response.ErrorListener() {
             @Override
@@ -728,7 +937,6 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                     if(ifnovo == 0)
                     modelo_id = response.getInt("MODELO");
 
-
                     // arrayContacto.clear();
                     boolean status = response.getBoolean("status");
                     //marca_id = response.getInt("MARCA");
@@ -759,6 +967,33 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 if(ifnovo == 0) {
                     spinner_modelo.setSelection(modelo_id - 10);
                 }
+
+                spinner_modelo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        if(position == 0)
+                            idmodelo = 10;
+
+                        if(position == 1)
+                            idmodelo = 11;
+
+                        if(position == 2)
+                            idmodelo = 12;
+
+                        if(position == 3)
+                            idmodelo = 13;
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
             }
         },new Response.ErrorListener() {
             @Override
@@ -782,7 +1017,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logout:
-                session.setLoggedIn(false, id_int_user,id_int_cliente);
+                session.setLoggedIn(false, id_int_user);
                 Intent intent = new Intent(PerfilCliente.this, MainActivity.class);
                 startActivity(intent);
                 finish();
