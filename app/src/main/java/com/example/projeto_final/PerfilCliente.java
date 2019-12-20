@@ -92,11 +92,11 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                // Toast.makeText(PerfilCliente.this, "" + id_int_cliente, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(PerfilCliente.this, "" + idmarca, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(PerfilCliente.this, "" + idveiculo, Toast.LENGTH_SHORT).show();
-               /*
+
                 Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
                 startActivity(i);
                 finish();
-                */
+
                 } else {
                     Toast.makeText(PerfilCliente.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 }
@@ -196,11 +196,8 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                         try {
                             boolean status = response.getBoolean("status");
                             if (status) {
-                                /*
-                                Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
-                                startActivity(i);
-                                finish();*/
+
+                                //Toast.makeText(PerfilCliente.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
                                 fillSpinner_marca(id, 0);
 
                             }
