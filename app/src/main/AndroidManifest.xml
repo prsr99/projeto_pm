@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PedidoAssistencia" android:label="Pedido de assistência"></activity>
+        <activity android:name=".DetalhesPedido" android:label="Detalhes Pedido"></activity>
+        <activity
+            android:name=".PedidosEfetuados"
+            android:label="Pedidos Efetuados" />
+        <activity
+            android:name=".PedidoAssistencia"
+            android:label="Pedido de assistência" />
         <activity
             android:name=".MenuUtilizador"
             android:label="Menu" />

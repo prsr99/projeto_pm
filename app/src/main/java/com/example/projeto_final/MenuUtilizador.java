@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MenuUtilizador extends AppCompatActivity {
 
     Session session;
-    Button b1,b2,b3,b4,b5;
+    Button b1,b2,b3,b4;
     int id_int_user = -1;
 
     @Override
@@ -30,7 +30,6 @@ public class MenuUtilizador extends AppCompatActivity {
         b2 = (Button)findViewById(R.id.pedido_assistencia);
         b3 = (Button)findViewById(R.id.pedido_efetuados);
         b4 = (Button)findViewById(R.id.logoutt);
-        b5 = (Button)findViewById(R.id.pedido_deccorrer);
 
 
         b1.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +51,8 @@ public class MenuUtilizador extends AppCompatActivity {
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MenuUtilizador.this, PedidosEfetuados.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MenuUtilizador.this, PedidosEfetuados.class);
+                startActivity(intent);
             }
         });
 
@@ -68,13 +67,6 @@ public class MenuUtilizador extends AppCompatActivity {
             }
         });
 
-        b5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(MenuUtilizador.this, PedidosDecorrer.class);
-                //startActivity(intent);
-            }
-        });
     }
 }
 

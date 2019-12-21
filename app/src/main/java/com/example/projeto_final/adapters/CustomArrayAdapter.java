@@ -22,8 +22,27 @@ public class CustomArrayAdapter extends ArrayAdapter<Pedido> {
         Pedido p = getItem(position);
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_linha, parent, false);
-        ((TextView) convertView.findViewById(R.id.assunto)).setText(p.getAssunto());
+
+        String aceite;
+        String terminado;
+
+        if(p.getIf_aceite() == 1)
+            aceite = "Aceite";
+        else
+            aceite = "Pendente";
+
+        if(p.getIf_terminado() == 1)
+            terminado = "Terminado";
+        else
+            terminado = "A decorrer";
+
+
+        ((TextView) convertView.findViewById(R.id.assunto)).setText("Assunto: " + p.getAssunto());
         ((TextView) convertView.findViewById(R.id.localizacao_user)).setText("" + p.getLocalizacao());
+        if(p.getIf_terminado() == 0)
+            ((TextView) convertView.findViewById(R.id.estado)).setText("Estado: " + aceite);
+        if(p.getIf_terminado() == 1)
+            ((TextView) convertView.findViewById(R.id.estado)).setText("Estado :" + terminado);
         return convertView;
 
     }

@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enviar Pedido"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
