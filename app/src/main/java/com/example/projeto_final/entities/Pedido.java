@@ -9,8 +9,12 @@ public class Pedido {
     public int if_terminado;
     public String nome_mecanico;
     public String apelido_mecanico;
+    public int telemovel_cliente;
+    public String nome_cliente;
+    public String apelido_cliente;
+    public int id_veiculo;
 
-    public Pedido(int id,String assunto,String mensagem, String localizacao, int if_aceite, int if_terminado, String nome_mecanico, String apelido_mecanico) {
+    public Pedido(int id,String assunto,String mensagem, String localizacao, int if_aceite, int if_terminado, String nome_mecanico, String apelido_mecanico, int id_veiculo, String nome_cliente, String apelido_cliente, int telemovel_cliente) {
         this.id = id;
         this.assunto=assunto;
         this.mensagem=mensagem;
@@ -19,6 +23,10 @@ public class Pedido {
         this.if_terminado=if_terminado;
         this.nome_mecanico=nome_mecanico;
         this.apelido_mecanico=apelido_mecanico;
+        this.id_veiculo=id_veiculo;
+        this.nome_cliente=nome_cliente;
+        this.apelido_cliente=apelido_cliente;
+        this.telemovel_cliente=telemovel_cliente;
 
     }
 

@@ -70,7 +70,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
        // fillSpinner_marca();
         Button btn1 = (Button)findViewById(R.id.button1);
 
-        if(!session.loggedIn()) {
+        if(!session.loggedInCliente()) {
             Intent intent = new Intent(PerfilCliente.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -1014,7 +1014,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logout:
-                session.setLoggedIn(false, id_int_user);
+                session.setLoggedInCliente(false, id_int_user);
                 Intent intent = new Intent(PerfilCliente.this, MainActivity.class);
                 startActivity(intent);
                 finish();

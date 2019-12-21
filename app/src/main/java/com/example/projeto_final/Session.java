@@ -14,8 +14,8 @@ public class Session {
         editor = prefs.edit();      // abrir sharedPreferences em modo de edição
     }
 
-    public void setLoggedIn( boolean loggedIn, int id_user) {
-        editor.putBoolean("loggedInMode",loggedIn);
+    public void setLoggedInCliente( boolean loggedIn, int id_user) {
+        editor.putBoolean("loggedInCliente",loggedIn);
         editor.putInt("ID_USER", id_user);
         editor.commit();
     }
@@ -25,7 +25,17 @@ public class Session {
         editor.commit();
     }
 
-    public boolean loggedIn() {
-        return prefs.getBoolean("loggedInMode",false);
+    public void setLoggedInMecanico(boolean loggedIn, int id_mecanico) {
+        editor.putInt("ID_MECANICO", id_mecanico);
+        editor.putBoolean("loggedInMecanico",loggedIn);
+        editor.commit();
+    }
+
+    public boolean loggedInCliente() {
+        return prefs.getBoolean("loggedInCliente",false);
+    }
+
+    public boolean loggedInMecanico() {
+        return prefs.getBoolean("loggedInMecanico",false);
     }
 }

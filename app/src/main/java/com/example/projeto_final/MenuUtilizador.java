@@ -25,7 +25,8 @@ public class MenuUtilizador extends AppCompatActivity {
         session = new Session(this);
 
         SharedPreferences result = getSharedPreferences("myApp", Context.MODE_PRIVATE);
-        int id_cliente = result.getInt("ID_CLIENTE", -1);
+        int id_mecanico = result.getInt("ID_MECANICO", -1);
+
         b1 = (Button)findViewById(R.id.perfil);
         b2 = (Button)findViewById(R.id.pedido_assistencia);
         b3 = (Button)findViewById(R.id.pedido_efetuados);
@@ -60,7 +61,7 @@ public class MenuUtilizador extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.setLoggedIn(false, id_int_user);
+                session.setLoggedInCliente(false, id_int_user);
                 Intent intent = new Intent(MenuUtilizador.this, MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -100,8 +100,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(session.loggedIn()) {
+        if(session.loggedInCliente()) {
             Intent i = new Intent(MainActivity.this, MenuUtilizador.class);
+            startActivity(i);
+            finish();
+        }
+
+        if(session.loggedInMecanico()) {
+            Intent i = new Intent(MainActivity.this, PedidosMecanico.class);
             startActivity(i);
             finish();
         }
@@ -278,6 +284,68 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
     }
 
+    public void getIDMecanico (int id) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/mecanicos/" + id;
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean status = response.getBoolean("status");
+                            if(status) {
+                                // Toast.makeText(LoginActivity.this, ""+ status, Toast.LENGTH_SHORT).show();
+                                //id = response.optString("id");
+
+                                JSONObject obj = response.getJSONObject(("DATA"));
+
+                                int id_mecanico  = obj.optInt("id");
+                                //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+                                session.setLoggedInMecanico(true, id_mecanico);
+                                Intent i = new Intent(MainActivity.this, PedidosMecanico.class);
+                                startActivity(i);
+                                finish();
+
+                            }
+
+                            else {
+                              /* AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                               builder.setCancelable(true);
+                               builder.setMessage("User não existe");
+                               builder.setPositiveButton("OK",
+                                       new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog, int which) {
+                                           }
+                                       });
+
+
+                               AlertDialog dialog = builder.create();
+                               dialog.show();*/
+
+
+
+
+                                Toast.makeText(MainActivity.this, "" + status, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (JSONException ex) {
+                            Log.d("login", "" + ex);
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+        //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+    }
+
 
 public void criaCliente (int id) {
 
@@ -332,7 +400,7 @@ public void existeCliente (final int id) {
                         if(status) {
                             JSONObject obj = response.getJSONObject("DATA");
                             int idcliente = obj.getInt("id");
-                            session.setLoggedIn(true, id_int_user);
+                            session.setLoggedInCliente(true, id_int_user);
                             session.setClienteID(idcliente);
                            // Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                            // startActivity(i);
@@ -344,7 +412,7 @@ public void existeCliente (final int id) {
                         else {
 
                             criaCliente(id);
-                            session.setLoggedIn(true, id_int_user);
+                            session.setLoggedInCliente(true, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);
@@ -386,7 +454,7 @@ public void ifCliente(final int id) {
                         }
 
                         else if(status == false){
-                            //ACTIVITY DO MECANICO
+                            getIDMecanico(id);
                         }
 
                         else {

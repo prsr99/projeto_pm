@@ -14,7 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DetalhesPedido" android:label="Detalhes Pedido"></activity>
+        <activity android:name=".TerminarPedido"></activity>
+        <activity
+            android:name=".DetalhesPedidoMecanico"
+            android:label="Detalhes Pedido" />
+        <activity
+            android:name=".PedidosMecanico"
+            android:label="Pedidos Clientes" />
+        <activity
+            android:name=".DetalhesPedido"
+            android:label="Detalhes Pedido" />
         <activity
             android:name=".PedidosEfetuados"
             android:label="Pedidos Efetuados" />
