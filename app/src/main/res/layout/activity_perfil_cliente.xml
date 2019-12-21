@@ -10,8 +10,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Dados Cliente">
+        </TextView>
+
+        <View
+            android:id="@+id/linha_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/perfil"
+            android:background="#c0c0c0"/>
+
+
         <EditText
             android:id="@+id/nome"
+            android:layout_below="@+id/linha_perfil"
+            android:layout_marginTop="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"

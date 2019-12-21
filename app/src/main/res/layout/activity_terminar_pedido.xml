@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TerminarPedido"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/pedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:layout_marginTop="5sp"
+        android:text="Pedido">
+    </TextView>
+
+    <View
+        android:id="@+id/linha_pedido"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/pedido"
+        android:background="#c0c0c0"/>
+
+    <TextView
+        android:id="@+id/assunto_pedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_below="@id/linha_pedido"
+        android:layout_marginTop="15sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/mensagem_pedido"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15sp"
+        android:textSize="17sp"
+        android:layout_below="@+id/assunto_pedido"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        android:id="@+id/localizacao_pedido"
+        android:layout_below="@+id/mensagem_pedido"
+        android:layout_marginTop="15sp"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        android:id="@+id/cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/localizacao_pedido"
+        android:textSize="19sp"
+        android:layout_marginTop="15sp"
+        android:text="Dados Cliente">
+    </TextView>
+
+    <View
+        android:id="@+id/linha_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/cliente"
+        android:background="#c0c0c0"/>
+
+
+    <TextView
+        android:id="@+id/nome_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_below="@+id/linha_cliente"
+        android:textSize="17sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/telemovel_cliente"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nome_cliente"
+        android:textSize="17sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/veiculo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/telemovel_cliente"
+        android:textSize="19sp"
+        android:layout_marginTop="15sp"
+        android:text="Veiculo Cliente">
+    </TextView>
+
+    <View
+        android:id="@+id/linha_veiculo"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/veiculo"
+        android:background="#c0c0c0"/>
+
+
+    <TextView
+        android:id="@+id/marca_veiculo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_below="@+id/linha_veiculo"
+        android:textSize="17sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/modelo_veiculo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_below="@+id/marca_veiculo"
+        android:textSize="17sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/ano_veiculo"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modelo_veiculo"
+        android:textSize="17sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/matricula_veiculo"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ano_veiculo"
+        android:textSize="17sp">
+    </TextView>
+
+    <Button
+        android:id="@+id/button_terminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terminar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="25sp"
+        android:layout_below="@+id/matricula_veiculo">
+    </Button>
+
+</RelativeLayout>
