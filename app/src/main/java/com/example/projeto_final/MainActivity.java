@@ -64,15 +64,15 @@ public class MainActivity extends AppCompatActivity {
                     builder.setCancelable(true);
 
                     if(email.isEmpty()) {
-                        builder.setMessage(R.string.preencheloginuser);
+                        builder.setMessage(R.string.campo_vazio);
                     }
 
                     if(password.isEmpty()) {
-                        builder.setMessage(R.string.preencheloginpass);
+                        builder.setMessage(R.string.campo_vazio);
                     }
 
                     if(email.isEmpty() && password.isEmpty()) {
-                        builder.setMessage(R.string.alertapreenche);
+                        builder.setMessage(R.string.campos_vazios);
                     }
 
                     builder.setPositiveButton("OK",
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                 builder.setCancelable(true);
-                                builder.setMessage(R.string.loginerro);
+                                builder.setMessage(R.string.erro_login);
                                 builder.setPositiveButton("OK",
                                         new DialogInterface.OnClickListener() {
                                             @Override
@@ -203,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                             else {
+                                Intent i = new Intent(MainActivity.this, PerfilCliente.class);
+                                startActivity(i);
+                                finish();
                                  //Toast.makeText(MainActivity.this,response.getString("MSG") , Toast.LENGTH_SHORT).show();
                             }
 
@@ -400,7 +403,7 @@ public void existeCliente (final int id) {
                         if(status) {
                             JSONObject obj = response.getJSONObject("DATA");
                             int idcliente = obj.getInt("id");
-                            session.setLoggedInCliente(true, id_int_user);
+                            session.setLoggedInCliente(false, id_int_user);
                             session.setClienteID(idcliente);
                            // Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                            // startActivity(i);
@@ -412,7 +415,7 @@ public void existeCliente (final int id) {
                         else {
 
                             criaCliente(id);
-                            session.setLoggedInCliente(true, id_int_user);
+                            session.setLoggedInCliente(false, id_int_user);
 
                             Intent i = new Intent(MainActivity.this, PerfilCliente.class);
                             startActivity(i);

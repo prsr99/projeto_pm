@@ -2,7 +2,9 @@ package com.example.projeto_final;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,6 +54,7 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
     int idmarca;
     int idmodelo;
     int idveiculo = 1;
+    Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +73,12 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
        // fillSpinner_marca();
         Button btn1 = (Button)findViewById(R.id.button1);
 
+        /*
         if(!session.loggedInCliente()) {
             Intent intent = new Intent(PerfilCliente.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
+        }*/
 
         SharedPreferences result = getSharedPreferences("myApp", Context.MODE_PRIVATE);
         final int id_user = result.getInt("ID_USER", -1);
@@ -93,11 +97,29 @@ public class PerfilCliente extends AppCompatActivity implements AdapterView.OnIt
                 //Toast.makeText(PerfilCliente.this, "" + idmarca, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(PerfilCliente.this, "" + idveiculo, Toast.LENGTH_SHORT).show();
 
+                    session.setLoggedInCliente(true, id_user);
                 Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
                 startActivity(i);
                 finish();
 
                 } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setCancelable(true);
+                    builder.setMessage(R.string.preencha_campos);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+
+
+
                     Toast.makeText(PerfilCliente.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 }
             }

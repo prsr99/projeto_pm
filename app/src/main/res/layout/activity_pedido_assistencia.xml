@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:layout_marginTop="20sp"
-        android:text="Assunto: ">
+        android:text="@string/assunto">
     </TextView>
 
     <EditText
@@ -31,7 +31,7 @@
         android:textSize="19sp"
         android:layout_below="@+id/assunto"
         android:layout_height="wrap_content"
-        android:text="Mensagem: ">
+        android:text="@string/mensagem">
     </TextView>
 
     <EditText
@@ -50,7 +50,7 @@
         android:textSize="19sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Localização: ">
+        android:text="@string/localizacao">
     </TextView>
 
     <EditText
@@ -68,7 +68,7 @@
         android:layout_marginTop="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar Pedido"
+        android:text="@string/enviar_pedido"
         android:textSize="15sp"
         android:layout_centerHorizontal="true"/>
 
