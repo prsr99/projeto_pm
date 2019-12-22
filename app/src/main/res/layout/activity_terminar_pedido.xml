@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:layout_marginTop="5sp"
-        android:text="Pedido">
+        android:text="@string/pedido">
     </TextView>
 
     <View
@@ -57,7 +57,7 @@
         android:layout_below="@+id/localizacao_pedido"
         android:textSize="19sp"
         android:layout_marginTop="15sp"
-        android:text="Dados Cliente">
+        android:text="@string/dados_cliente">
     </TextView>
 
     <View
@@ -93,7 +93,7 @@
         android:layout_below="@+id/telemovel_cliente"
         android:textSize="19sp"
         android:layout_marginTop="15sp"
-        android:text="Veiculo Cliente">
+        android:text="@string/veiculo_cliente">
     </TextView>
 
     <View
@@ -144,7 +144,7 @@
         android:id="@+id/button_terminar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Terminar"
+        android:text="@string/terminar"
         android:layout_centerHorizontal="true"
         android:layout_margin="25sp"
         android:layout_below="@+id/matricula_veiculo">

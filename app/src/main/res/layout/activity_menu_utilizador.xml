@@ -10,7 +10,7 @@
         android:id="@+id/perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Perfil"
+        android:text="@string/perfil"
         android:textSize="16sp"
         android:background="@drawable/button_transparent"
         android:drawableRight="@drawable/perfil"
@@ -27,7 +27,7 @@
         android:textColor="#000000"
         android:layout_marginLeft="7sp"
         android:layout_marginTop="60sp"
-        android:text="Ações:">
+        android:text="@string/acao">
     </TextView>
 
     <Button
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/acao"
-        android:text="Pedido de Assistência">
+        android:text="@string/pedido_assistencia">
     </Button>
 
 
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pedido_assistencia"
-        android:text="Pedidos Efetuados">
+        android:text="@string/pedidos_efetuados">
     </Button>
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pedido_efetuados"
-        android:text="Logout">
+        android:text="@string/logout">
     </Button>
 
 

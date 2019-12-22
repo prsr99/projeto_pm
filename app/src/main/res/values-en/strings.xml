@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="campo_vazio">Field can\'t be empty!</string>
+    <string name="campos_vazios">Fields can\'t be empty!</string>
+    <string name="erro_login">Email/password are wrong!</string>
+    <string name="pass_no_match">Passwords do not match!</string>
+    <string name="email_existe">Email already exists!</string>
+    <string name="email_valido">Enter a valid email address!</string>
+    <string name="weak_pass">Password too weak. Your password must have at least 4 characters, 1 digit, 1 upper case letter and 1 lower case letter</string>
+    <string name="detalhes_pedido">Request Details</string>
+    <string name="pedidos_clientes">Customer Requests</string>
+    <string name="pedidos_efetuados">Orders Placed</string>
+    <string name="pedido_assistencia">Request Assistance</string>
+    <string name="menu">Menu</string>
+    <string name="perfil">Profile</string>
+    <string name="login">Login</string>
+    <string name="registar">Register</string>
+    <string name="preencha_campos">Fill all the fields !</string>
+    <string name="pedido">Request</string>
+    <string name="dados_cliente">Personal Data</string>
+    <string name="veiculo_cliente">Customer Vehicle</string>
+    <string name="aceitar_pedido">Accept Request</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="acao">Actions:</string>
+    <string name="logout">Logout</string>
+    <string name="assunto">Topic:</string>
+    <string name="mensagem">Message</string>
+    <string name="localizacao">Location</string>
+    <string name="enviar_pedido">Send Request</string>
+    <string name="nome">Name*</string>
+    <string name="apelido">Surname*</string>
+    <string name="telemovel">Phone Number*</string>
+    <string name="veiculo">Vehicle</string>
+    <string name="marca">Make:</string>
+    <string name="modelo">Model</string>
+    <string name="ano">Year*</string>
+    <string name="matricula">Registration*</string>
+    <string name="OK">OK</string>
+    <string name="conf_pass">Confirm Password</string>
+    <string name="terminar">Finish</string>
+</resources>

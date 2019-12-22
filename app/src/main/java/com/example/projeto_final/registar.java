@@ -2,6 +2,9 @@ package com.example.projeto_final;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -39,7 +42,7 @@ public class registar extends AppCompatActivity {
     EditText e3;
     Button btn;
     boolean exist;
-
+    Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,23 @@ public class registar extends AppCompatActivity {
                     }
                 }
                 else {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setCancelable(true);
+                    builder.setMessage(R.string.pass_no_match);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+
+
                     e3.setError(getResources().getString(R.string.pass_no_match));
                 }
             }
@@ -85,7 +105,7 @@ public class registar extends AppCompatActivity {
                         try {
                             boolean status = response.getBoolean("status");
                             if (status) {
-                                Toast.makeText(registar.this, getResources().getString(R.string.email_already_exists), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(registar.this, getResources().getString(R.string.email_existe), Toast.LENGTH_SHORT).show();
 
                             }
                             else {
@@ -157,7 +177,7 @@ public class registar extends AppCompatActivity {
         String passwordInput = e2.getEditableText().toString().trim();
 
         if(passwordInput.isEmpty()) {
-            e2.setError(getResources().getString(R.string.no_empty));
+            e2.setError(getResources().getString(R.string.campo_vazio));
             return false;
         }
         else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
@@ -174,11 +194,11 @@ public class registar extends AppCompatActivity {
         String emailInput = e1.getEditableText().toString().trim();
 
         if (emailInput.isEmpty()) {
-            e1.setError(getResources().getString(R.string.no_empty));
+            e1.setError(getResources().getString(R.string.campo_vazio));
             return false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) { // CTRL + B
-            e1.setError(getResources().getString(R.string.valid_email));
+            e1.setError(getResources().getString(R.string.email_valido));
             return false;
         }
         else{

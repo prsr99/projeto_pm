@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
-        android:hint="@string/conf_password"
+        android:hint="@string/conf_pass"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/pass"
         android:inputType="textPassword" />

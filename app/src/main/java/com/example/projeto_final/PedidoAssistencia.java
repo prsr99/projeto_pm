@@ -2,7 +2,9 @@ package com.example.projeto_final;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ public class PedidoAssistencia extends AppCompatActivity {
     EditText localizacao;
     Button btn;
     int id_cliente;
+    String id_veiculo;
+    Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,7 @@ public class PedidoAssistencia extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!assunto.getText().toString().isEmpty() && !mensagem.getText().toString().isEmpty() && !localizacao.getText().toString().isEmpty()) {
-                    efetuar_pedido();
+                    getIDVeiculo(id_cliente);
 
                     /*Intent i = new Intent(PerfilCliente.this, MenuUtilizador.class);
                     startActivity(i);
@@ -58,6 +62,22 @@ public class PedidoAssistencia extends AppCompatActivity {
                      */
 
                 } else {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setCancelable(true);
+                    builder.setMessage(R.string.campos_vazios);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+
                     Toast.makeText(PedidoAssistencia.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -65,15 +85,51 @@ public class PedidoAssistencia extends AppCompatActivity {
 
     }
 
+    public void getIDVeiculo (int id) {
+        String url = "https://inactive-mosses.000webhostapp.com/myslim/api/cliente/getveiculoid/" + id;
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean status = response.getBoolean("status");
+                            if(status) {
+                                JSONObject obj = response.getJSONObject(("DATA"));
+                                id_veiculo = obj.optString("veiculo_id");
+                                efetuar_pedido();
+
+                            }
+                            else {
+                            }
+                        }
+                        catch (JSONException ex) {
+
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(PedidoAssistencia.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+        //Toast.makeText(LoginActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+    }
+
 
     public void efetuar_pedido() {
         String url = "https://inactive-mosses.000webhostapp.com/myslim/api/pedidos/cria_pedido";
 
         Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("id_cliente", String.valueOf(id_cliente));
+        jsonParams.put("clientes_id", String.valueOf(id_cliente));
         jsonParams.put("assunto", assunto.getText().toString());
         jsonParams.put("mensagem", mensagem.getText().toString());
         jsonParams.put("localizacao", localizacao.getText().toString());
+        jsonParams.put("veiculo_id", id_veiculo);
 
         //Log.d("TESTE", "" + ano.getText().toString() + " " + matricula.getText().toString());
 
@@ -84,6 +140,9 @@ public class PedidoAssistencia extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getBoolean("status")) {
+                                Intent i = new Intent(PedidoAssistencia.this, MenuUtilizador.class);
+                                startActivity(i);
+                                finish();
                                 Toast.makeText(PedidoAssistencia.this, response.getString("MSG"), Toast.LENGTH_SHORT).show();
 
                             } else {

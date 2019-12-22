@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projeto_final">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
+        android:name=".NotificationChannel"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Assitência de Viagem"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".TerminarPedido"></activity>
         <activity
             android:name=".DetalhesPedidoMecanico"
-            android:label="Detalhes Pedido" />
+            android:label="@string/detalhes_pedido" />
         <activity
             android:name=".PedidosMecanico"
-            android:label="Pedidos Clientes" />
+            android:label="@string/pedidos_clientes" />
         <activity
             android:name=".DetalhesPedido"
-            android:label="Detalhes Pedido" />
+            android:label="@string/detalhes_pedido" />
         <activity
             android:name=".PedidosEfetuados"
-            android:label="Pedidos Efetuados" />
+            android:label="@string/pedidos_efetuados" />
         <activity
             android:name=".PedidoAssistencia"
-            android:label="Pedido de assistência" />
+            android:label="@string/pedido_assistencia" />
         <activity
             android:name=".MenuUtilizador"
-            android:label="Menu" />
+            android:label="@string/menu" />
         <activity
             android:name=".PerfilCliente"
-            android:label="Perfil" />
+            android:label="@string/perfil" />
         <activity
             android:name=".registar"
             android:label="@string/registar" />
@@ -46,6 +51,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".BackgroundService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Dados Cliente">
+            android:text="@string/dados_cliente">
         </TextView>
 
         <View
@@ -42,14 +42,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/nome"
             android:textSize="18sp"
-            android:hint="Apelido*">
+            android:hint="@string/apelido">
         </EditText>
 
         <EditText
             android:id="@+id/telemovel"
             android:layout_below="@+id/apelido"
-            android:hint="Telemóvel*"
+            android:hint="@string/telemovel"
             android:textSize="18sp"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </EditText>
@@ -60,7 +61,7 @@
             android:layout_below="@+id/telemovel"
             android:textSize="20sp"
             android:layout_marginTop="35sp"
-            android:text="Veículo">
+            android:text="@string/veiculo">
         </TextView>
 
         <View
@@ -102,7 +103,7 @@
             android:id="@+id/tv_marca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Marca:"
+            android:text="@string/marca"
             android:layout_marginTop="15sp"
             android:layout_below="@+id/linha"
             android:textSize="18sp">
@@ -114,7 +115,7 @@
             android:layout_marginTop="15sp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_marca"
-            android:text="Modelo:"
+            android:text="@string/modelo"
             android:textSize="18sp">
         </TextView>
 
@@ -125,7 +126,8 @@
             android:layout_marginLeft="35sp"
             android:layout_below="@+id/tv_modelo"
             android:textSize="18sp"
-            android:hint="Ano*"
+            android:inputType="number"
+            android:hint="@string/ano"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </EditText>
@@ -135,7 +137,7 @@
             android:layout_below="@+id/ano"
             android:layout_marginRight="60sp"
             android:layout_marginLeft="35sp"
-            android:hint="Matrícula*"
+            android:hint="@string/matricula"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -149,7 +151,7 @@
             android:layout_marginTop="30sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="@string/OK"
             android:textSize="18sp"
             android:layout_centerHorizontal="true"/>
 
