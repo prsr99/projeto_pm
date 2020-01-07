@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="campo_vazio">Campo não pode estar vazio!</string>
+    <string name="campo_vazio">EasyAssist</string>
     <string name="campos_vazios">Campos não podem estar vazios!</string>
     <string name="erro_login">Email/password incorretos!</string>
     <string name="pass_no_match">Passwords não coincidem!</string>
@@ -40,4 +40,5 @@
     <string name="OK">OK</string>
     <string name="conf_pass">Confirmar Password</string>
     <string name="terminar">Terminar</string>
+    <string name="app_name">EasyAssist</string>
 </resources>

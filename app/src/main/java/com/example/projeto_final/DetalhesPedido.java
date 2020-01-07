@@ -21,7 +21,7 @@ public class DetalhesPedido extends AppCompatActivity {
         mensagem.setText(" Mensagem: " + getIntent().getStringExtra("mensagem"));
         localizacao.setText(" Localização: " + getIntent().getStringExtra("localizacao"));
         if (getIntent().getStringExtra("nome_mecanico").equals("null")) {
-            mecanico.setText("Estado: Pendente");
+            mecanico.setText(" Estado: Pendente");
         }
         else {
             mecanico.setText(" Atendido por: " + getIntent().getStringExtra("nome_mecanico") + " " + getIntent().getStringExtra("apelido_mecanico"));

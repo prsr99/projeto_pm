@@ -39,4 +39,5 @@
     <string name="OK">OK</string>
     <string name="conf_pass">Confirm Password</string>
     <string name="terminar">Finish</string>
+    <string name="app_name">EasyAssist</string>
 </resources>

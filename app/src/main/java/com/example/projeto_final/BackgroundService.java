@@ -34,7 +34,7 @@ public class BackgroundService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this, "Service created!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service created!", Toast.LENGTH_LONG).show();
         notificationManager = NotificationManagerCompat.from(this);
         handler = new Handler();
         runnable = new Runnable() {
@@ -53,12 +53,12 @@ public class BackgroundService extends Service {
     public void onDestroy() {
         /* IF YOU WANT THIS SERVICE KILLED WITH THE APP THEN UNCOMMENT THE FOLLOWING LINE */
         handler.removeCallbacks(runnable);
-        Toast.makeText(this, "Service stopped", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service stopped", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onStart(Intent intent, int startid) {
-        Toast.makeText(this, "Service started by user.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service started by user.", Toast.LENGTH_LONG).show();
     }
 
     public void notificaPedido () {

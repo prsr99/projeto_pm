@@ -180,6 +180,7 @@ public class PedidosMecanico extends AppCompatActivity {
                         CustomArrayAdapterMecanico itemsAdapter =
                                 new CustomArrayAdapterMecanico(PedidosMecanico.this, Pedido);
                         ((ListView) findViewById(R.id.lista_mecanico)).setAdapter(itemsAdapter);
+                        itemsAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException ex) {
                     Log.d("EXCEPTION: ", "" + ex);
